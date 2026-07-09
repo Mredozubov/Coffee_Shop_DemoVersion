@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloom & Bean Coffee</title>
+
+  <style>
+    :root {
+      --cream: #f7f0e6;
+      --paper: #fffaf2;
+      --latte: #d8b894;
+      --coffee: #4d3528;
+      --espresso: #2a1a14;
+      --sage: #80906f;
+      --blue: #24456b;
+      --soft-blue: #dbe7ef;
+      --rose: #d99a8a;
+      --border: rgba(77, 53, 40, 0.22);
+      --shadow: 0 18px 45px rgba(42, 26, 20, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--cream);
+      color: var(--coffee);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .top-strip {
+      background: var(--blue);
+      color: var(--paper);
+      text-align: center;
+      padding: 10px 18px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(247, 240, 230, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      font-size: 32px;
+      color: var(--blue);
+      letter-spacing: 0.04em;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--blue);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .order-btn {
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      padding: 11px 18px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .order-btn:hover {
+      background: var(--blue);
+      color: var(--paper);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--coffee);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero {
+      min-height: 82vh;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-image {
+      position: relative;
+      min-height: 620px;
+      background:
+        linear-gradient(rgba(42, 26, 20, 0.1), rgba(42, 26, 20, 0.2)),
+        url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-card {
+      position: absolute;
+      left: 34px;
+      bottom: 34px;
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid var(--border);
+      width: min(420px, calc(100% - 68px));
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card p {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .hero-card h1 {
+      font-size: clamp(36px, 5vw, 70px);
+      line-height: 0.95;
+      font-weight: 400;
+      color: var(--espresso);
+    }
+
+    .hero-content {
+      padding: 90px 8vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top right, rgba(217, 154, 138, 0.22), transparent 32%),
+        var(--paper);
+    }
+
+    .eyebrow {
+      font-family: Arial, sans-serif;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .hero-content h2 {
+      font-size: clamp(44px, 6vw, 86px);
+      line-height: 0.92;
+      font-weight: 400;
+      color: var(--blue);
+      margin-bottom: 28px;
+    }
+
+    .hero-content h2 em {
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .hero-content p {
+      font-size: 19px;
+      line-height: 1.75;
+      max-width: 580px;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid var(--blue);
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--paper);
+    }
+
+    .btn-primary:hover {
+      background: var(--espresso);
+      border-color: var(--espresso);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--blue);
+    }
+
+    .btn-secondary:hover {
+      background: var(--blue);
+      color: var(--paper);
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 92px 24px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .framed-img {
+      border: 1px solid var(--border);
+      padding: 14px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      transform: rotate(-1deg);
+    }
+
+    .framed-img img {
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+
+    .section-title {
+      font-size: clamp(38px, 4.5vw, 68px);
+      font-weight: 400;
+      line-height: 0.98;
+      color: var(--blue);
+      margin-bottom: 24px;
+    }
+
+    .section-title em {
+      color: var(--rose);
+    }
+
+    .copy {
+      font-size: 18px;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .details-box {
+      margin-top: 32px;
+      border: 1px solid var(--border);
+      background: rgba(255, 250, 242, 0.72);
+      padding: 26px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 22px;
+      border-bottom: 1px solid rgba(77, 53, 40, 0.15);
+      padding-bottom: 16px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .detail-label {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--blue);
+    }
+
+    .detail-value {
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .menu-section {
+      background:
+        linear-gradient(rgba(36, 69, 107, 0.88), rgba(36, 69, 107, 0.88)),
+        url("https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      color: var(--paper);
+    }
+
+    .menu-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 96px 24px;
+    }
+
+    .menu-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 38px;
+    }
+
+    .menu-head h2 {
+      font-size: clamp(42px, 5vw, 76px);
+      font-weight: 400;
+      line-height: 0.95;
+    }
+
+    .menu-head p {
+      max-width: 400px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: rgba(255, 250, 242, 0.86);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .menu-card {
+      background: rgba(255, 250, 242, 0.94);
+      color: var(--coffee);
+      padding: 28px;
+      min-height: 270px;
+      border: 1px solid rgba(255, 250, 242, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .menu-card h3 {
+      font-size: 31px;
+      font-weight: 400;
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+
+    .menu-card p {
+      line-height: 1.65;
+      font-size: 16px;
+      margin-bottom: 22px;
+    }
+
+    .price {
+      font-family: Arial, sans-serif;
+      color: var(--rose);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 13px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    .feature-band {
+      background: var(--soft-blue);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .feature-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 78px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .feature {
+      padding: 28px;
+      border-right: 1px solid rgba(77, 53, 40, 0.18);
+    }
+
+    .feature:last-child {
+      border-right: none;
+    }
+
+    .feature h3 {
+      color: var(--blue);
+      font-size: 30px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .feature p {
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .contact-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 42px;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 15px 16px;
+      color: var(--coffee);
+      font: 15px Arial, sans-serif;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--blue);
+    }
+
+    footer {
+      background: var(--espresso);
+      color: var(--paper);
+      padding: 58px 24px 28px;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 36px;
+    }
+
+    .footer-logo {
+      font-size: 36px;
+      color: var(--paper);
+      margin-bottom: 14px;
+    }
+
+    .footer-logo span {
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .footer-inner p {
+      line-height: 1.7;
+      color: rgba(255, 250, 242, 0.78);
+      max-width: 420px;
+    }
+
+    .footer-col h4 {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 15px;
+      color: var(--latte);
+    }
+
+    .footer-col a {
+      display: block;
+      margin-bottom: 10px;
+      color: rgba(255, 250, 242, 0.8);
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 38px auto 0;
+      border-top: 1px solid rgba(255, 250, 242, 0.2);
+      padding-top: 22px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: rgba(255, 250, 242, 0.65);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .floating-order {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: var(--rose);
+      color: var(--espresso);
+      border: 1px solid rgba(42, 26, 20, 0.25);
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      font-size: 12px;
+      z-index: 60;
+      box-shadow: var(--shadow);
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav {
+        align-items: flex-start;
+      }
+
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        top: 78px;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image {
+        min-height: 430px;
+      }
+
+      .hero-content {
+        padding: 58px 24px;
+      }
+
+      .split {
+        grid-template-columns: 1fr;
+        gap: 38px;
+      }
+
+      .menu-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .feature-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .feature {
+        border-right: none;
+        border-bottom: 1px solid rgba(77, 53, 40, 0.18);
+      }
+
+      .feature:last-child {
+        border-bottom: none;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .floating-order {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .brand {
+        font-size: 25px;
+      }
+
+      .hero-card {
+        left: 18px;
+        bottom: 18px;
+        width: calc(100% - 36px);
+        padding: 22px;
+      }
+
+      .hero-content h2 {
+        font-size: 48px;
+      }
+
+      .section {
+        padding: 68px 18px;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery img {
+        height: 250px;
+      }
+
+      .contact-card {
+        padding: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-strip">
+    Freshly roasted coffee, house pastries, breakfast, lunch & private café events
+  </div>
+
+  <header>
+    <nav class="nav">
+      <a href="#" class="brand">Bloom <span>&</span> Bean</a>
+
+      <button class="mobile-menu-btn" id="menuButton" type="button">
+        Menu
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#menu">Menu</a>
+        <a href="#location">Location</a>
+        <a href="#story">Our Story</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+        <a class="order-btn" href="#order">Order Online</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-image">
+        <div class="hero-card">
+          <p>Neighborhood Coffee House</p>
+          <h1>Warm cups, soft mornings.</h1>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <div class="eyebrow">Brooklyn, New York</div>
+        <h2>Coffee with a little <em>romance</em>.</h2>
+        <p>
+          Bloom & Bean is a cozy café made for slow mornings, quick espresso stops,
+          pastry dates, laptop afternoons, and golden-hour conversations.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary">View Menu</a>
+          <a href="#location" class="btn btn-secondary">Visit Us</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split" id="location">
+      <div class="framed-img">
+        <img
+          src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
+          alt="Coffee shop interior"
+        />
+      </div>
+
+      <div>
+        <p class="eyebrow">Location</p>
+        <h2 class="section-title">Your everyday café escape.</h2>
+        <p class="copy">
+          Located on a quiet corner near the park, our café brings together a
+          custom espresso bar, fresh flowers, vintage wood tables, soft lighting,
+          and the smell of pastries coming out of the oven.
+        </p>
+        <p class="copy">
+          Stop by before work, meet a friend after class, or settle in with a
+          cappuccino and something sweet.
+        </p>
+
+        <div class="details-box">
+          <div class="detail-row">
+            <div class="detail-label">Address</div>
+            <div class="detail-value">128 Willow Street, Brooklyn, NY 11201</div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label">Phone</div>
+            <div class="detail-value">(718) 555-0148</div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label">Hours</div>
+            <div class="detail-value">
+              Mon - Fri: 7:00am - 6:00pm<br />
+              Sat - Sun: 8:00am - 7:00pm
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label">Offering</div>
+            <div class="detail-value">
+              Dine-in, pickup, delivery, outdoor seating, pastries, brunch & catering
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+      <div class="menu-wrap">
+        <div class="menu-head">
+          <div>
+            <p class="eyebrow" style="color: #f4d6c9;">Menu Favorites</p>
+            <h2>Made fresh, poured slowly.</h2>
+          </div>
+
+          <p>
+            From classic espresso drinks to flaky pastries and seasonal brunch
+            plates, everything is made to feel comforting, simple, and special.
+          </p>
+        </div>
+
+        <div class="menu-grid">
+          <article class="menu-card">
+            <div>
+              <h3>Lavender Latte</h3>
+              <p>
+                Double espresso, steamed milk, house lavender syrup, and a soft
+                floral finish.
+              </p>
+            </div>
+            <div class="price">$6.25</div>
+          </article>
+
+          <article class="menu-card">
+            <div>
+              <h3>Honey Oat Cold Brew</h3>
+              <p>
+                Slow-steeped cold brew with oat milk, whipped honey foam, and
+                cinnamon.
+              </p>
+            </div>
+            <div class="price">$6.75</div>
+          </article>
+
+          <article class="menu-card">
+            <div>
+              <h3>Butter Croissant</h3>
+              <p>
+                Golden, flaky, and baked each morning with cultured butter.
+              </p>
+            </div>
+            <div class="price">$4.95</div>
+          </article>
+
+          <article class="menu-card">
+            <div>
+              <h3>Garden Toast</h3>
+              <p>
+                Sourdough, whipped ricotta, roasted tomatoes, basil, olive oil,
+                and cracked pepper.
+              </p>
+            </div>
+            <div class="price">$12.50</div>
+          </article>
+
+          <article class="menu-card">
+            <div>
+              <h3>Blueberry Crumb Muffin</h3>
+              <p>
+                Soft vanilla muffin with blueberries, lemon zest, and brown sugar
+                crumble.
+              </p>
+            </div>
+            <div class="price">$5.25</div>
+          </article>
+
+          <article class="menu-card">
+            <div>
+              <h3>Brunch Plate</h3>
+              <p>
+                Jammy eggs, greens, roasted potatoes, sourdough, butter, and
+                seasonal fruit.
+              </p>
+            </div>
+            <div class="price">$16.00</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <p class="eyebrow">Our Story</p>
+      <h2 class="section-title">A softer kind of coffee shop.</h2>
+
+      <div class="split">
+        <div>
+          <p class="copy">
+            Bloom & Bean started with a simple idea: a coffee shop should feel
+            like a small pause in the day. Not rushed. Not loud. Just warm,
+            beautiful, and easy to love.
+          </p>
+
+          <p class="copy">
+            Our beans are roasted in small batches, our pastries are baked daily,
+            and our flowers are refreshed every week to keep the room feeling
+            alive.
+          </p>
+
+          <a href="#contact" class="btn btn-secondary">Plan a Visit</a>
+        </div>
+
+        <div class="gallery">
+          <img
+            src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80"
+            alt="Latte art"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1511081692775-05d0f180a065?auto=format&fit=crop&w=800&q=80"
+            alt="Pastries"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80"
+            alt="Cafe counter"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1523942839745-7848c839b661?auto=format&fit=crop&w=800&q=80"
+            alt="Coffee table"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-band">
+      <div class="feature-inner">
+        <div class="feature">
+          <h3>Pickup</h3>
+          <p>
+            Order ahead and grab your coffee, breakfast, or pastry without the wait.
+          </p>
+        </div>
+
+        <div class="feature">
+          <h3>Catering</h3>
+          <p>
+            Coffee boxes, pastry trays, brunch boards, and custom event packages.
+          </p>
+        </div>
+
+        <div class="feature">
+          <h3>Private Events</h3>
+          <p>
+            Host showers, birthdays, small meetings, tastings, and cozy celebrations.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split" id="events">
+      <div>
+        <p class="eyebrow">Catering & Events</p>
+        <h2 class="section-title">Bring the café to your table.</h2>
+        <p class="copy">
+          Planning a team breakfast, birthday brunch, bridal shower, or small
+          gathering? We can prepare coffee service, pastry boxes, sandwiches,
+          salads, desserts, and floral café styling.
+        </p>
+        <p class="copy">
+          Send us the date, guest count, and event style. We’ll help build a menu
+          that feels warm, generous, and easy.
+        </p>
+
+        <a href="#contact" class="btn btn-primary">Request Catering</a>
+      </div>
+
+      <div class="framed-img">
+        <img
+          src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80"
+          alt="Cafe event table"
+        />
+      </div>
+    </section>
+
+    <section class="section split" id="contact">
+      <div class="contact-card">
+        <p class="eyebrow">Contact</p>
+        <h2 class="section-title">Say hello.</h2>
+
+        <form id="contactForm">
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Email address" required />
+
+          <select name="reason" required>
+            <option value="">What can we help with?</option>
+            <option value="pickup">Pickup order</option>
+            <option value="catering">Catering</option>
+            <option value="private-event">Private event</option>
+            <option value="general">General question</option>
+          </select>
+
+          <textarea name="message" placeholder="Your message" required></textarea>
+
+          <button class="btn btn-primary" type="submit">
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <div>
+        <p class="eyebrow">Newsletter</p>
+        <h2 class="section-title">Fresh drops, seasonal drinks & little notes.</h2>
+        <p class="copy">
+          Join our list for new menu items, weekend specials, event dates, and
+          early access to holiday pastry boxes.
+        </p>
+
+        <form id="newsletterForm">
+          <input type="email" name="newsletter" placeholder="Email address" required />
+          <button class="btn btn-secondary" type="submit">
+            Sign Up
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <a href="#menu" class="floating-order">Order</a>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">Bloom <span>&</span> Bean</div>
+        <p>
+          A cozy neighborhood coffee shop serving small-batch coffee, fresh
+          pastries, brunch, catering, and private café events.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#menu">Menu</a>
+        <a href="#location">Location</a>
+        <a href="#story">Our Story</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <a href="#">128 Willow Street</a>
+        <a href="#">Brooklyn, NY 11201</a>
+        <a href="#">(718) 555-0148</a>
+        <a href="#">hello@bloombean.com</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Bloom & Bean Coffee</span>
+      <span>Instagram · TikTok · Gift Cards · Careers</span>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+    const contactForm = document.getElementById("contactForm");
+    const newsletterForm = document.getElementById("newsletterForm");
+
+    menuButton.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
+
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+      });
+    });
+
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      alert("Message sent! Replace this alert with your form service or backend.");
+      contactForm.reset();
+    });
+
+    newsletterForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      alert("You're signed up! Replace this alert with your email signup service.");
+      newsletterForm.reset();
+    });
+  </script>
+</body>
+</html>
